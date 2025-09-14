@@ -6,13 +6,13 @@ import numpy as np
 
 # ページ設定
 st.set_page_config(
-    page_title="複利法の可視化学習アプリ", 
+    page_title="シミュレーション①複利法", 
     page_icon="📈",
     layout="wide"
 )
 
 # タイトルとクレジット
-st.title("📈 複利法の可視化学習アプリ")
+st.title("シミュレーション①複利法（pp.89-90）")
 st.caption("Created by Dit-Lab.(Daiki ITO)")
 st.caption("Supported by Tomoaki ATSUMI")
 
