@@ -1,0 +1,123 @@
+  <section class="step" id="step1">
+    <h2><span class="no">STEP 1</span>単利と複利のちがい</h2>
+    <p class="desc"><span class="term" data-t="単利">単利</span>は最初の元金にだけ利息がつき、<span class="term" data-t="複利">複利</span>は<strong>ついた利息にもさらに利息がつきます</strong>。</p>
+
+    <div class="panel">
+      <div class="grid c2">
+        <div>
+          <label class="fld" for="cap">元金：<span class="mono" id="capV">100,000</span> 円</label>
+          <input type="range" id="cap" min="10000" max="1000000" step="10000" value="100000">
+          <label class="fld" style="margin-top:10px" for="rate">年利：<span class="mono" id="rateV">3.0</span> ％</label>
+          <input type="range" id="rate" min="0.1" max="10" step="0.1" value="3">
+          <label class="fld" style="margin-top:10px" for="yrs">期間：<span class="mono" id="yrsV">10</span> 年</label>
+          <input type="range" id="yrs" min="1" max="40" step="1" value="10">
+          <div class="metrics" style="margin-top:14px">
+            <div class="metric"><div class="k">単利のとき</div><div class="v" id="mSimple">—</div><div class="s">円</div></div>
+            <div class="metric"><div class="k">複利のとき</div><div class="v" id="mComp">—</div><div class="s">円</div></div>
+            <div class="metric"><div class="k">差</div><div class="v" id="mGap">—</div><div class="s">円</div></div>
+          </div>
+        </div>
+        <div id="ciChart"></div>
+      </div>
+      <div class="note" id="ciNote" style="margin-top:12px"></div>
+      <div class="eqbox" style="margin-top:12px">
+        単利：元利合計 ＝ 元金 ×（1 ＋ 年利 × 年数）　／　複利：元利合計 ＝ 元金 ×（1 ＋ 年利）<sup>年数</sup>
+      </div>
+      <div class="toolbar" id="ciTools"></div>
+    </div>
+  </section>
+
+  <section class="step" id="step2">
+    <h2><span class="no">STEP 2</span>ローンの返済を1か月ずつ追う</h2>
+    <p class="desc">本文と同じ条件です。<strong>100,000円を年利3.0％で借り、毎月5,000円ずつ返す</strong>。利息は前月の返済後の残高にかかります。</p>
+
+    <div class="panel">
+      <div class="stepbox" id="stepBox"></div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn primary" id="nextMonth">次の月へ ▶</button>
+        <button class="btn" id="allMonths">最後まで一気に</button>
+        <button class="btn ghost" id="resetLoan">最初から</button>
+        <span class="badge" id="monthBadge"></span>
+      </div>
+
+      <div class="note info" style="margin-top:12px">
+        <strong>月利は年利を12で割ります。</strong>年利3.0％なら月利は <span class="mono">0.030 ÷ 12 ＝ 0.0025</span>（0.25％）。<br>
+        初月に5,000円返すと残高は <span class="mono">100,000 − 5,000 ＝ 95,000円</span>。<br>
+        2か月目は <span class="mono">95,000 ＋ 95,000 × 0.0025 − 5,000</span> となります。
+      </div>
+
+      <div class="tbl-scroll" style="margin-top:14px;max-height:400px;overflow:auto">
+        <table class="tbl" id="loanTable"></table>
+      </div>
+      <div class="metrics" style="margin-top:12px">
+        <div class="metric"><div class="k">返済回数</div><div class="v" id="mCount">—</div><div class="s">回</div></div>
+        <div class="metric"><div class="k">支払った利息の合計</div><div class="v" id="mInt">—</div><div class="s">円</div></div>
+        <div class="metric"><div class="k">総返済額</div><div class="v" id="mTotal">—</div><div class="s">円</div></div>
+      </div>
+      <div id="loanChart" style="margin-top:12px"></div>
+      <div class="note" id="loanNote" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <section class="step" id="step3">
+    <h2><span class="no">STEP 3</span>条件を変えるとどうなるか</h2>
+    <p class="desc">毎月の返済額と年利を変えて、返済回数と総返済額がどう変わるかを確かめましょう。</p>
+    <div class="panel">
+      <div class="grid c2">
+        <div>
+          <label class="fld" for="loanCap">借入額：<span class="mono" id="loanCapV">100,000</span> 円</label>
+          <input type="range" id="loanCap" min="50000" max="3000000" step="10000" value="100000">
+          <label class="fld" style="margin-top:10px" for="loanRate">年利：<span class="mono" id="loanRateV">3.0</span> ％</label>
+          <input type="range" id="loanRate" min="0" max="18" step="0.1" value="3">
+          <label class="fld" style="margin-top:10px" for="loanPay">毎月の返済額：<span class="mono" id="loanPayV">5,000</span> 円</label>
+          <input type="range" id="loanPay" min="1000" max="100000" step="1000" value="5000">
+        </div>
+        <div>
+          <div class="metrics">
+            <div class="metric"><div class="k">返済回数</div><div class="v" id="sCount">—</div><div class="s">回</div></div>
+            <div class="metric"><div class="k">利息の合計</div><div class="v" id="sInt">—</div><div class="s">円</div></div>
+          </div>
+          <div class="metrics" style="margin-top:2px">
+            <div class="metric"><div class="k">総返済額</div><div class="v" id="sTotal">—</div><div class="s">円</div></div>
+            <div class="metric"><div class="k">元金に対する割合</div><div class="v" id="sRatio">—</div><div class="s">％</div></div>
+          </div>
+          <div class="note" id="simNote" style="margin-top:14px"></div>
+        </div>
+      </div>
+      <div id="simChart" style="margin-top:14px"></div>
+      <div class="toolbar" id="simTools"></div>
+    </div>
+  </section>
+
+  <section class="step" id="step4">
+    <h2><span class="no">STEP 4</span>確認クイズ</h2>
+    <div class="panel">
+      <div class="qhead">
+        <span class="badge" id="qProgress">1 / 1</span>
+        <span class="badge">正解 <span class="score" id="qScore">0</span></span>
+      </div>
+      <div class="card-q"><div class="q-scene" id="qText"></div></div>
+      <div class="choice4" id="qChoices"></div>
+      <div class="note" id="qFb" hidden style="margin-top:12px"></div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn primary" id="qNext" disabled>次の問題</button>
+        <button class="btn ghost" id="qReset">最初から</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="step" id="glossary">
+    <h2><span class="no">用語</span>この節で出てくることば</h2>
+    <div id="glossBox"></div>
+  </section>
+
+  <section class="step">
+    <h2><span class="no">まとめ</span>複利とローンのポイント</h2>
+    <ul style="margin:0;padding-left:1.2em;color:var(--ink-2);font-size:.92rem;line-height:2.05">
+      <li><strong>月利 ＝ 年利 ÷ 12</strong>。年利3.0％なら月利0.0025。</li>
+      <li>利息は<strong>その月の残高</strong>にかかる。残高が減れば利息も減る。</li>
+      <li>返済額が一定でも、<strong>元金にあてられる分は月ごとに増えていく</strong>。だから残高の減り方はだんだん大きくなる。</li>
+      <li>返済額を増やすと<strong>回数も利息の合計も大きく減る</strong>。</li>
+      <li>複利は期間が長いほど効果が大きい。<strong>借りるときは不利、貯めるときは有利</strong>にはたらく。</li>
+    </ul>
+  </section>
