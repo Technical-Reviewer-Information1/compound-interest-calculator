@@ -237,5 +237,20 @@
     drawCI(); drawLoan(); drawSim(); startQuiz();
     window.Terms.attach();
   }
+  if (window.Predict) Predict.make('pdC', {
+    q: '100万円を<strong>年利5％</strong>で預けます。30年後、<strong>単利なら250万円</strong>です。では<strong>複利</strong>ではいくらになるでしょう？',
+    type: 'pick',
+    ch: ['約260万円', '約310万円', '約432万円', '約650万円'],
+    answer: function () { return 2; },
+    show: function () {
+      const v = 1000000 * Math.pow(1.05, 30);
+      return '100万円 × 1.05<sup>30</sup> ＝ <strong>' + Math.round(v).toLocaleString('ja-JP') + '円</strong>（約432万円）。' +
+             '単利の250万円に対して<strong>約1.7倍</strong>です。';
+    },
+    why: '複利は「<strong>利息にも利息がつく</strong>」ので、年数が延びるほど差が急に開きます。' +
+         '単利は毎年5万円ずつ足すだけ（直線）ですが、複利は前年の残高に5％を掛ける（カーブ）ためです。' +
+         'STEP 1 で年数のつまみを動かすと、この広がり方を目で確かめられます。'
+  });
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
